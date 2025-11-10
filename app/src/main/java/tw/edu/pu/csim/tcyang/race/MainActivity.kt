@@ -15,6 +15,8 @@ import tw.edu.pu.csim.tcyang.race.ui.theme.RaceTheme
 import android.content.pm.ActivityInfo
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.activity.viewModels
+import androidx.window.layout.WindowMetricsCalculator
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,9 +26,30 @@ class MainActivity : ComponentActivity() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
 
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+
+        WindowCompat.setDecorFitsSystemWindows(
+            window, false
+        )
+
+        val windowMetricsCalculator =
+            WindowMetricsCalculator.getOrCreate()
+
+        val currentWindowMetrics =
+            windowMetricsCalculator.computeCurrentWindowMetrics(this)
+
+        val bounds = currentWindowMetrics.bounds
+
+        val screenWidthPx = bounds.width().toFloat()
+        val screenHeightPx = bounds.height().toFloat()
+
+        val gameViewModel: GameViewModel by viewModels()
+        gameViewModel.SetGameSize(screenWidthPx,screenHeightPx)
+
         windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
         setContent {
-            GameScreen(message="橫式螢幕，隱藏狀態列")
+           RaceTheme {
+                GameScreen(message = "Landscape screen, hide the status bar.",gameViewModel)
+            }
         }
     }
 }
