@@ -12,10 +12,17 @@ class GameViewModel: ViewModel() {
     var screenHeightPx by mutableStateOf(0f)
         private set
 
+    var score by mutableStateOf(0)
+        private set
+
     // 設定螢幕寬度與高度
     fun SetGameSize(w: Float, h: Float) {
         screenWidthPx = w
         screenHeightPx = h
+    }
+
+    fun addScore() {
+        score += 1
     }
 
 }

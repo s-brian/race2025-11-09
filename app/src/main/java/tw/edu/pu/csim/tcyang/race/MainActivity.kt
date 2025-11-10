@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
         windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
         setContent {
            RaceTheme {
-                GameScreen(message = "Landscape screen, hide the status bar.",gameViewModel)
+                GameScreen(message = "賽馬遊戲 (作者：Brian Shih)",gameViewModel)
             }
         }
     }
